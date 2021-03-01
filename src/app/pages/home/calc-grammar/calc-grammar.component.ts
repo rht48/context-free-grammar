@@ -17,7 +17,7 @@ export class CalcGrammarComponent implements OnInit {
 
   }
 
-  getFirstStrategy() {
+  getArrayStrategy() {
     return new ArrayStrategy();
   }
 

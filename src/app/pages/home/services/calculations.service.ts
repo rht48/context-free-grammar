@@ -68,6 +68,31 @@ export class CalculationsService {
     return false;
   }
 
+  firstElement(element: string): string[] {
+    if(!this.grammar.isNonTerminal(element) && element !== Grammar.EPSILON) {
+      return [element];
+    }
+    if(element === Grammar.EPSILON) {
+      return [];
+    }
+    const size = this.null_table[element].length;
+    return this.first_table[element][size - 1];
+  }
+
+  firstElements(elements: string[]): string[] {
+    if(elements.length === 0) {
+      return [];
+    }
+    const first = this.firstElement(elements[0]);
+    elements.shift();
+    const rest = this.firstElements(elements);
+    let res = rest;
+    for(let elem of first) {
+      this.addIfNotPresent(res, elem);
+    }
+    return res;
+  }
+
   addIfNotPresent(array, element): void {
     if(array.indexOf(element) === -1) {
       array.push(element);
