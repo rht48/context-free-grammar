@@ -6,6 +6,8 @@ export class Grammar {
     private nonterminals: string[];
     private rules: Rule[];
 
+    public static EPSILON = 'epsilon';
+
     constructor() {
         this.entrypoint = "";
         this.alphabet = [];
@@ -26,7 +28,13 @@ export class Grammar {
     }
 
     addToAlphabet(letter: string): void {
-        this.alphabet.push(letter);
+        if(!this.isAlphabet(letter)) {
+            this.alphabet.push(letter);
+        }
+    }
+
+    isAlphabet(input: string): boolean {
+        return this.alphabet.indexOf(input) !== -1;
     }
 
     getAlphabet(): string[] {
@@ -38,11 +46,17 @@ export class Grammar {
     }
 
     addNonTerminal(nonterminal: string): void {
-        this.nonterminals.push(nonterminal);
+        if(!this.isNonTerminal(nonterminal)) {
+            this.nonterminals.push(nonterminal);
+        }
     }
 
     getNonTerminals(): string[] {
         return this.nonterminals;
+    }
+
+    isNonTerminal(input: string): boolean {
+        return this.nonterminals.indexOf(input) !== -1;
     }
 
     setRules(rules: Rule[]): void {

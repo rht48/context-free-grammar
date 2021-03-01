@@ -16,14 +16,27 @@
         <div class="container row vertical-divider">
             <div class="col-6">
                 <label for="config-grammar-text-area"><h3>Input:</h3></label>
-                <textarea class="form-control" id="config-grammar-text-area" rows="6"></textarea>
+                <textarea class="form-control" id="config-grammar-text-area" rows="6" (input)="parse($event.target.value)"></textarea>
             </div>
             <div class="col-6">
                 <h3>Parsed:</h3>
-                <h5>Entrypoint:</h5>
-                <h5>Alphabet: &#x0007B;&#x0007D;</h5>
-                <h5>Non-termninals: &#x0007B;&#x0007D;</h5>
-                <h5>Rules:</h5>
+                <hr/>
+                <h5>Entrypoint: {{ grammarService.getEntryPoint() }}</h5>
+                <hr/>
+                <div>
+                    <h5>Alphabet: </h5>
+                    <h5 style="font-size: 20px;" [innerHTML]="grammarService.getAlphabet()"></h5>
+                </div>
+                <hr/>
+                <div>
+                    <h5>Non-termninals: </h5>
+                    <h5 [innerHTML]="grammarService.getNonTerminals()"></h5>
+                </div>
+                <hr/>
+                <div>
+                    <h5>Rules:</h5>
+                    <h5 [innerHTML]="grammarService.getRules()"></h5>
+                </div>
             </div>
         </div>
     </div>
