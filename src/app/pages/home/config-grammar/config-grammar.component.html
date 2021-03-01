@@ -1,1 +1,14 @@
-<p>config-grammar works!</p>
+<div class="container mt-5">
+    <button type="button" class="btn btn-success btn-block" (click)="openModal(configGrammar)">Configure Grammar</button>
+</div>
+
+<ng-template #configGrammar>
+    <!-- Title -->
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Configuration</h4>
+        <!-- The x that closes the modal -->
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</ng-template>
