@@ -20,21 +20,21 @@
             </div>
             <div class="col-6">
                 <h3>Parsed:</h3>
-                <h5>Entrypoint: {{ grammarService.getEntryPoint() }}</h5>
+                <h5>Entrypoint: {{ showGrammarService.getEntryPoint(grammarService.getGrammar()) }}</h5>
                 <hr/>
                 <div>
                     <h5>Alphabet: </h5>
-                    <h5 style="font-size: 20px;" [innerHTML]="grammarService.getAlphabet()"></h5>
+                    <h5 style="font-size: 20px;" [innerHTML]="showGrammarService.getAlphabet(grammarService.getGrammar())"></h5>
                 </div>
                 <hr/>
                 <div>
                     <h5>Non-termninals: </h5>
-                    <h5 [innerHTML]="grammarService.getNonTerminals()"></h5>
+                    <h5 [innerHTML]="showGrammarService.getNonTerminals(grammarService.getGrammar())"></h5>
                 </div>
                 <hr/>
                 <div>
                     <h5>Rules:</h5>
-                    <h5 [innerHTML]="grammarService.getRules()"></h5>
+                    <h5 [innerHTML]="showGrammarService.getRules(grammarService.getGrammar())"></h5>
                 </div>
             </div>
         </div>

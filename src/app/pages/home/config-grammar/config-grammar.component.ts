@@ -2,6 +2,7 @@ import { Component, OnInit, Pipe, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CalculationsService } from '../services/calculations.service';
 import { GrammarService } from '../services/grammar.service';
+import { ShowGrammarService } from '../services/show-grammar.service';
 
 @Component({
   selector: 'app-config-grammar',
@@ -15,7 +16,8 @@ export class ConfigGrammarComponent implements OnInit {
 
   constructor(private modalService: BsModalService,
               private grammarService: GrammarService,
-              private calculationsService: CalculationsService) { }
+              private calculationsService: CalculationsService,
+              private showGrammarService: ShowGrammarService) { }
 
   ngOnInit(): void {
   }
