@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ArrayStrategy } from 'src/app/models/strategies/strategy';
 import { CalculationsService } from '../services/calculations.service';
 import { ShowGrammarService } from '../services/show-grammar.service';
 
@@ -14,6 +15,10 @@ export class CalcGrammarComponent implements OnInit {
 
   ngOnInit(): void {
 
+  }
+
+  getFirstStrategy() {
+    return new ArrayStrategy();
   }
 
 }

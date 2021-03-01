@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { DefaultStrategy, Strategy } from 'src/app/models/strategies/strategy';
 
 @Component({
   selector: 'app-table',
@@ -8,7 +9,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class TableComponent implements OnInit {
 
   @Input() table = {}
-  @Input() strategy;
+  @Input() strategy: Strategy = new DefaultStrategy();
 
   constructor() { }
 

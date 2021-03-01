@@ -6,7 +6,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let i of range()">
-            <td *ngFor="let key of keys()">{{ table[key][i] }}</td>
+            <td *ngFor="let key of keys()" [innerHTML]="strategy.toString(table[key][i])"></td>
         </tr>
     </tbody>
 </table>

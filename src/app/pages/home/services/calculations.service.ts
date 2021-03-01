@@ -9,6 +9,15 @@ C -> c | epsilon
 D -> epsilon
 */
 
+/*
+S -> E eof
+E -> T E'
+E' -> + T E' | - T E' | epsilon
+T -> F T'
+T' -> x F T' | / F T' | epsilon
+F -> ( E ) | id
+*/
+
 @Injectable({
   providedIn: 'root'
 })
