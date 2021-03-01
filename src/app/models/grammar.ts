@@ -5,6 +5,7 @@ export class Grammar {
     private alphabet: string[];
     private nonterminals: string[];
     private rules: Rule[];
+    private indexed_rules = {};
 
     public static EPSILON = 'epsilon';
 
@@ -64,11 +65,22 @@ export class Grammar {
     }
 
     addRule(rule: Rule): void {
-        this.rules.push(rule);
+        if(!this.rules.find(r => r.getNonTerminal() === rule.getNonTerminal() && 
+                            JSON.stringify(r.getProduction().getTerms()) === JSON.stringify(rule.getProduction().getTerms()))) {
+            this.rules.push(rule);
+            if(Object.keys(this.indexed_rules).indexOf(rule.getNonTerminal()) === -1) {
+                this.indexed_rules[rule.getNonTerminal()] = [];
+            }
+            this.indexed_rules[rule.getNonTerminal()].push(rule);
+        }
     }
 
     getRules(): Rule[] {
         return this.rules;
+    }
+
+    getIndexedRules() {
+        return this.indexed_rules;
     }
 
 }
@@ -77,12 +89,12 @@ export class Rule {
 
     private id: number;
     private nonterminal: string;
-    private productions: Production[];
+    private production: Production;
 
     constructor() {
         this.id = -1;
         this.nonterminal = "";
-        this.productions = [];
+        this.production = new Production();
     }
 
     setId(id: number): void {
@@ -101,16 +113,12 @@ export class Rule {
         return this.nonterminal;
     }
 
-    setProductions(productions: Production[]): void {
-        this.productions = productions;
+    setProduction(production: Production): void {
+        this.production = production;
     }
 
-    addProduction(production: Production): void {
-        this.productions.push(production);
-    }
-
-    getProductions(): Production[] {
-        return this.productions;
+    getProduction(): Production {
+        return this.production;
     }
 
 }
