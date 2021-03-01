@@ -14,10 +14,10 @@ export class ConfigGrammarComponent implements OnInit {
   // Used for showing the modal
   modalRef!: BsModalRef;
 
-  constructor(private modalService: BsModalService,
-              private grammarService: GrammarService,
-              private calculationsService: CalculationsService,
-              private showGrammarService: ShowGrammarService) { }
+  constructor(public modalService: BsModalService,
+              public grammarService: GrammarService,
+              public calculationsService: CalculationsService,
+              public showGrammarService: ShowGrammarService) { }
 
   ngOnInit(): void {
   }

@@ -18,6 +18,7 @@ export class GrammarService {
       this.grammar.setEntryPoint(first[0]);
     }
     let right = [];
+    let counter = 1;
     for(const line of lines) {
       const separated = line.split(' -> ');
       if(separated.length > 1) {
@@ -27,6 +28,7 @@ export class GrammarService {
         right.push(rules);
         for(const r of rules.split(' | ')) {
           let rule = new Rule();
+          rule.setId(counter ++);
           let production = new Production();
           rule.setNonTerminal(nonterminal);
           for(const element of r.split(' ')) {

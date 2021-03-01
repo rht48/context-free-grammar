@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { Grammar } from 'src/app/models/grammar';
 
 @Injectable({
@@ -59,6 +60,25 @@ export class ShowGrammarService {
           if(i < rules[nonterminal].length - 1) {
             str += ' | ';
           }
+        }
+        str += '<br/>';
+      }
+      return str;
+    }else {
+      return '&empty;';
+    }
+  }
+
+  getNumberedRules(grammar: Grammar): string {
+    if(grammar.getRules().length > 0) {
+      let str = '';
+      for(const rule of grammar.getRules()) {
+        const terms = rule.getProductions()[0].getTerms();
+        str += '(' + rule.getId() + ')  ' + rule.getNonTerminal() + ' &xrarr; '
+        if(terms.length === 1 && terms[0] === Grammar.EPSILON) {
+          str += '&epsilon;'
+        }else {
+          str += terms.join(' ');
         }
         str += '<br/>';
       }

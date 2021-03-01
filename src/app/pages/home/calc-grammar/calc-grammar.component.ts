@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CalculationsService } from '../services/calculations.service';
+import { ShowGrammarService } from '../services/show-grammar.service';
 
 @Component({
   selector: 'app-calc-grammar',
@@ -7,9 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CalcGrammarComponent implements OnInit {
 
-  constructor() { }
+  constructor(public showGrammarService: ShowGrammarService,
+    public calculationsService: CalculationsService) { }
 
   ngOnInit(): void {
+    this.calculationsService
   }
 
 }

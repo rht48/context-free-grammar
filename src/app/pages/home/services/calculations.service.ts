@@ -14,4 +14,8 @@ export class CalculationsService {
     this.grammar = grammar;
   }
 
+  getGrammar(): Grammar {
+    return this.grammar;
+  }
+
 }

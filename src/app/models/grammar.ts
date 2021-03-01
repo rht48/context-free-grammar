@@ -75,13 +75,23 @@ export class Grammar {
 
 export class Rule {
 
+    private id: number;
     private nonterminal: string;
     private productions: Production[];
 
     constructor() {
+        this.id = -1;
         this.nonterminal = "";
         this.productions = [];
-     }
+    }
+
+    setId(id: number): void {
+        this.id = id;
+    }
+
+    getId(): number {
+        return this.id;
+    }
 
     setNonTerminal(nt: string): void {
         this.nonterminal = nt;
