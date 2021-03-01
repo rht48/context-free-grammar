@@ -13,7 +13,7 @@ export class CalcGrammarComponent implements OnInit {
               public calculationsService: CalculationsService) { }
 
   ngOnInit(): void {
-    this.calculationsService
+
   }
 
 }

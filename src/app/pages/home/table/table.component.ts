@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class TableComponent implements OnInit {
 
   @Input() table = {}
+  @Input() strategy;
 
   constructor() { }
 

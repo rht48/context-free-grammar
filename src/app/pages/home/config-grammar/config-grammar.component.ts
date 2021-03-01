@@ -36,6 +36,7 @@ export class ConfigGrammarComponent implements OnInit {
     this.hideModal();
     this.calculationsService.setGrammar(grammar);
     this.calculationsService.calculateNull();
+    this.calculationsService.calculateFirst();
   }
 
   parse(input: string): void {
