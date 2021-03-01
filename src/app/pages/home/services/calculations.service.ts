@@ -27,6 +27,7 @@ export class CalculationsService {
 
   null_table = {};
   first_table = {};
+  follow_table = {}
 
   constructor() { }
 
@@ -44,6 +45,10 @@ export class CalculationsService {
 
   getFirstTable() {
     return this.first_table;
+  }
+
+  getFollowTable() {
+    return this.follow_table;
   }
 
   nullableElement(element: string): boolean {
@@ -181,7 +186,7 @@ export class CalculationsService {
               if(!this.grammar.isNonTerminal(first)) {
                 this.addIfNotPresent(table[nonterminal][current_line], first);
               }else {
-                for(let element of table[first][current_line - 1]) {
+                for(const element of table[first][current_line - 1]) {
                   this.addIfNotPresent(table[nonterminal][current_line], element);
                 }
               }
@@ -192,6 +197,52 @@ export class CalculationsService {
     } while(this.hasChanged(table, current_line));
     
     this.first_table = table;
+  }
+
+  calculateFollow(): void {
+    let table = {};
+    let current_line = 0;
+    for(const nonterminal of this.grammar.getNonTerminals()) {
+      table[nonterminal] = [[]];
+    }
+
+    do {
+      this.duplicateLastRow(table);
+      current_line++;
+      if(current_line === 1) {
+        table[this.grammar.getEntryPoint()][current_line].push('eof');
+      }
+
+      for(const nonterminal of this.grammar.getNonTerminals()) {
+        for(const rule of this.grammar.getRules()) {
+          const terms = rule.getProduction().getTerms();
+          const index = terms.indexOf(nonterminal);
+          if(index !== -1) {
+            const next = index + 1;
+            const beta = terms.slice(next);
+            if(next < terms.length) {
+              const firsts = this.firstElements(beta);
+              for(const first of firsts) {
+                this.addIfNotPresent(table[nonterminal][current_line], first);
+              }
+              if(this.nullableElements(beta)) {
+                for(const term of table[rule.getNonTerminal()][current_line - 1]) {
+                  this.addIfNotPresent(table[nonterminal][current_line], term);
+                }
+              }
+            }
+            if(next >= terms.length || this.nullableElements(beta)) {
+              for(const elem of table[rule.getNonTerminal()][current_line - 1]) {
+                this.addIfNotPresent(table[nonterminal][current_line], elem);
+              }
+            }
+          }
+        }
+      }
+
+    } while(this.hasChanged(table, current_line));
+
+    this.follow_table = table;
   }
 
 }
