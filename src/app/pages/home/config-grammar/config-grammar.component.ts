@@ -1,5 +1,6 @@
 import { Component, OnInit, Pipe, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { CalculationsService } from '../services/calculations.service';
 import { GrammarService } from '../services/grammar.service';
 
 @Component({
@@ -13,7 +14,8 @@ export class ConfigGrammarComponent implements OnInit {
   modalRef!: BsModalRef;
 
   constructor(private modalService: BsModalService,
-              private grammarService: GrammarService) { }
+              private grammarService: GrammarService,
+              private calculationsService: CalculationsService) { }
 
   ngOnInit(): void {
   }
@@ -30,6 +32,7 @@ export class ConfigGrammarComponent implements OnInit {
   saveGrammar(): void {
     const grammar = this.grammarService.getGrammar();
     this.hideModal();
+    this.calculationsService.setGrammar(grammar);
   }
 
   parse(input: string): void {
