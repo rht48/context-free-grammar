@@ -53,6 +53,14 @@ export class GrammarService {
     }
   }
 
+  getGrammar(): Grammar {
+    return this.grammar;
+  }
+
+  setGrammar(grammar: Grammar): void {
+    this.grammar = grammar;
+  }
+
   getEntryPoint(): string {
     if(this.grammar.getEntryPoint() !== '') {
       return this.grammar.getEntryPoint();
@@ -105,21 +113,8 @@ export class GrammarService {
             str += ' | ';
           }
         }
-        // for(let i = 0; i < rules[nonterminal].getProductions().length; i++) {
-        //   const terms = rule.getProductions()[i].getTerms();
-        //   if(terms.length === 1 && terms[0] === Grammar.EPSILON) {
-        //     str += '&epsilon;'
-        //   }else {
-        //     str += rule.getProductions()[i].getTerms().join(' ');
-        //   }
-        //   if(i < rule.getProductions().length - 1) {
-        //     str += ' | ';
-        //   }
-        // }
         str += '<br/>';
       }
-
-
       return str;
     }else {
       return '&empty;';

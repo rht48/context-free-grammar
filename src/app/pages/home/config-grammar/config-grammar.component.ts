@@ -23,6 +23,15 @@ export class ConfigGrammarComponent implements OnInit {
     this.modalRef = this.modalService.show(template);
   }
 
+  hideModal(): void {
+    this.modalRef.hide();
+  }
+
+  saveGrammar(): void {
+    const grammar = this.grammarService.getGrammar();
+    this.hideModal();
+  }
+
   parse(input: string): void {
     this.grammarService.parse(input);
   }
