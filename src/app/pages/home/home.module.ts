@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfigGrammarComponent } from './config-grammar/config-grammar.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { CalcGrammarComponent } from './calc-grammar/calc-grammar.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
   ],
   declarations: [
     HomePage,
-    ConfigGrammarComponent
+    ConfigGrammarComponent,
+    CalcGrammarComponent
   ]
 })
 export class HomeModule {
