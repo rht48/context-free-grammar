@@ -34,7 +34,7 @@ export class GrammarService {
           for(const element of r.split(' ')) {
             production.addTerm(element);
           }
-          rule.addProduction(production);
+          rule.setProduction(production);
           this.grammar.addRule(rule);
         }
       }

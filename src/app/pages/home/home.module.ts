@@ -7,6 +7,7 @@ import { ConfigGrammarComponent } from './config-grammar/config-grammar.componen
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { CalcGrammarComponent } from './calc-grammar/calc-grammar.component';
+import { TableComponent } from './table/table.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { CalcGrammarComponent } from './calc-grammar/calc-grammar.component';
   declarations: [
     HomePage,
     ConfigGrammarComponent,
-    CalcGrammarComponent
+    CalcGrammarComponent,
+    TableComponent
   ]
 })
 export class HomeModule {

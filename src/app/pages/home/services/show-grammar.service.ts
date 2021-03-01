@@ -43,7 +43,7 @@ export class ShowGrammarService {
         if(Object.keys(rules).indexOf(nonterminal) === -1) {
           rules[nonterminal] = [];
         }
-        rules[nonterminal] = rules[nonterminal].concat(rule.getProductions());
+        rules[nonterminal].push(rule.getProduction());
       }
 
 
@@ -73,7 +73,7 @@ export class ShowGrammarService {
     if(grammar.getRules().length > 0) {
       let str = '';
       for(const rule of grammar.getRules()) {
-        const terms = rule.getProductions()[0].getTerms();
+        const terms = rule.getProduction().getTerms();
         str += '(' + rule.getId() + ')  ' + rule.getNonTerminal() + ' &xrarr; '
         if(terms.length === 1 && terms[0] === Grammar.EPSILON) {
           str += '&epsilon;'

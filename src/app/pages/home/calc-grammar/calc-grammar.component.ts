@@ -10,7 +10,7 @@ import { ShowGrammarService } from '../services/show-grammar.service';
 export class CalcGrammarComponent implements OnInit {
 
   constructor(public showGrammarService: ShowGrammarService,
-    public calculationsService: CalculationsService) { }
+              public calculationsService: CalculationsService) { }
 
   ngOnInit(): void {
     this.calculationsService
