@@ -40,6 +40,7 @@
 </div>
 
 <h1 style="margin-bottom: 2em;">LL table:</h1>
-<div class="container">
-    <app-table [table]="calculationsService.getLLTable()" [strategy]="getNumberStrategy()" type="double"></app-table>
+<div class="container row">
+    <h5 class="col-3" [innerHTML]="showGrammarService.getNumberedRules(calculationsService.getGrammar())"></h5>
+    <app-table class="col-9" [table]="calculationsService.getLLTable()" [strategy]="getNumberStrategy()" type="double"></app-table>
 </div>

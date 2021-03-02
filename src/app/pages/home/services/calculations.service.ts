@@ -289,7 +289,7 @@ export class CalculationsService {
           if(this.nullableElements(terms)) {
             array = array.concat(this.followElement(nonterminal));
           }
-          console.log(letter, nonterminal, terms, array);
+
           if(array.indexOf(letter) !== -1) {
             table[letter][nonterminal] = rule.getId();
           }else if(table[letter][nonterminal] === undefined){
@@ -318,4 +318,14 @@ A -> a | D
 B -> b | epsilon
 C -> c | epsilon
 D -> epsilon
+*/
+
+/*
+S -> I eof
+I -> id = E ; I | p E ; I | epsilon
+E -> T E'
+E' -> + T E' | - T E' | epsilon
+T -> F T'
+T' -> x F T' | / F T' | epsilon
+F -> ( E ) | id | float
 */
