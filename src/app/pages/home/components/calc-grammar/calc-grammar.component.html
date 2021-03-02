@@ -49,7 +49,7 @@
 <h1 style="margin-bottom: 2em;">LL table:</h1>
 <div class="container">
     <div class="container row">
-        <h5 class="col-3" [innerHTML]="showGrammarService.getNumberedRules(calculationsService.getGrammar())"></h5>
+        <h5 class="col-3" *ngIf="calculationsService.getGrammar().getRules().length > 0" [innerHTML]="showGrammarService.getNumberedRules(calculationsService.getGrammar())"></h5>
         <app-table class="col-9" [table]="calculationsService.getLLTable()" [strategy]="getNumberStrategy()" type="double"></app-table>
     </div>
 </div>
