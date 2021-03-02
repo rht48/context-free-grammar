@@ -1,9 +1,9 @@
 import { Component, OnInit, Pipe, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Grammar } from 'src/app/models/grammar';
-import { CalculationsService } from '../services/calculations.service';
-import { GrammarService } from '../services/grammar.service';
-import { ShowGrammarService } from '../services/show-grammar.service';
+import { CalculationsService } from '../../services/calculations.service';
+import { GrammarService } from '../../services/grammar.service';
+import { ShowGrammarService } from '../../services/show-grammar.service';
 
 @Component({
   selector: 'app-config-grammar',

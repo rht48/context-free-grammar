@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ArrayStrategy, NumberStrategy } from 'src/app/models/strategies/strategy';
-import { CalculationsService } from '../services/calculations.service';
-import { ShowGrammarService } from '../services/show-grammar.service';
+import { CalculationsService } from '../../services/calculations.service';
+import { ShowGrammarService } from '../../services/show-grammar.service';
 
 @Component({
   selector: 'app-calc-grammar',
