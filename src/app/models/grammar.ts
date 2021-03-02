@@ -76,6 +76,15 @@ export class Grammar {
         }
     }
 
+    getRule(id: number): Rule {
+        for(const rule of this.rules) {
+            if(rule.getId() === id) {
+                return rule;
+            }
+        }
+        return undefined;
+    }
+
     getRules(): Rule[] {
         return this.rules;
     }
