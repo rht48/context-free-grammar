@@ -46,8 +46,9 @@ export class ShowGrammarService {
         rules[nonterminal].push(rule.getProduction());
       }
 
-
+      str += '<ul>';
       for(const nonterminal of Object.keys(rules)) {
+        str += '<li>';
         str += nonterminal + " &xrarr; ";
         for(let i = 0; i < rules[nonterminal].length; i++) {
           const rule = rules[nonterminal][i];
@@ -61,8 +62,9 @@ export class ShowGrammarService {
             str += ' | ';
           }
         }
-        str += '<br/>';
+        str += '</li>';
       }
+      str += '</ul>';
       return str;
     }else {
       return '&empty;';
