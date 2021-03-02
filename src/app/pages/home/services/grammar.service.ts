@@ -31,11 +31,11 @@ export class GrammarService {
           let production = new Production();
           rule.setNonTerminal(nonterminal);
           let elements = r.split(' ');
-          if(nonterminal === this.grammar.getEntryPoint()) {
-            if(elements.indexOf(Grammar.EOF) === -1) {
-              elements.push(Grammar.EOF);
-            }
-          }
+          // if(nonterminal === this.grammar.getEntryPoint()) {
+          //   if(elements.indexOf(Grammar.EOF) === -1) {
+          //     elements.push(Grammar.EOF);
+          //   }
+          // }
           right = right.concat(elements);
           for(const element of elements) {
             production.addTerm(element);

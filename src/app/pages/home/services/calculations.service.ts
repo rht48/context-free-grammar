@@ -267,7 +267,8 @@ export class CalculationsService {
 
   calculateLLTable(): void {
     let table = {};
-    const alphabet = this.grammar.getAlphabet();
+    const alpha = this.grammar.getAlphabet();
+    const alphabet = alpha.indexOf(Grammar.EOF) === -1 ? [Grammar.EOF].concat(alpha) : alpha;
     const nonterminals = this.grammar.getNonTerminals();
     const indexed_rules = this.grammar.getIndexedRules();
 
@@ -277,14 +278,18 @@ export class CalculationsService {
 
         for(const rule of indexed_rules[nonterminal]) {
           const terms = rule.getProduction().getTerms();
-          let array = [];
+          // let array = [];
           
+          // if(nonterminal != this.grammar.getEntryPoint() && this.nullableElements(terms)) {
+          //   array = this.followElement(nonterminal);
+          // }else {
+          //   array = this.firstElements(terms);
+          // }
+          let array = this.firstElements(terms);
           if(this.nullableElements(terms)) {
-            array = this.followElement(nonterminal);
-          }else {
-            array = this.firstElements(terms);
+            array = array.concat(this.followElement(nonterminal));
           }
-
+          console.log(letter, nonterminal, terms, array);
           if(array.indexOf(letter) !== -1) {
             table[letter][nonterminal] = rule.getId();
           }else if(table[letter][nonterminal] === undefined){
