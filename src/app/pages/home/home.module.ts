@@ -8,6 +8,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { CalcGrammarComponent } from './components/calc-grammar/calc-grammar.component';
 import { TableComponent } from './components/table/table.component';
+import { ParseComponent } from './components/parse/parse.component';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { TableComponent } from './components/table/table.component';
     HomePage,
     ConfigGrammarComponent,
     CalcGrammarComponent,
-    TableComponent
+    TableComponent,
+    ParseComponent
   ]
 })
 export class HomeModule {
