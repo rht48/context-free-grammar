@@ -10,6 +10,12 @@ D -> epsilon
 */
 
 /*
+S' -> S eof
+S -> C C
+C -> c C | d
+*/
+
+/*
 S -> E eof
 E -> T E'
 E' -> + T E' | - T E' | epsilon
@@ -27,7 +33,8 @@ export class CalculationsService {
 
   null_table = {};
   first_table = {};
-  follow_table = {}
+  follow_table = {};
+  ll_table = {};
 
   constructor() { }
 
@@ -49,6 +56,10 @@ export class CalculationsService {
 
   getFollowTable() {
     return this.follow_table;
+  }
+
+  getLLTable() {
+    return this.ll_table;
   }
 
   nullableElement(element: string): boolean {
@@ -79,7 +90,7 @@ export class CalculationsService {
     if(element === Grammar.EPSILON) {
       return [];
     }
-    const size = this.null_table[element].length;
+    const size = this.first_table[element].length;
     return this.first_table[element][size - 1];
   }
 
@@ -88,12 +99,23 @@ export class CalculationsService {
       return [];
     }
     const first = this.firstElement(elements[0]);
-    const rest = this.firstElements(elements.slice(1));
+    let rest = [];
+    if(this.nullableElement(elements[0])) {
+      rest = this.firstElements(elements.slice(1));
+    }
     let res = rest;
     for(let elem of first) {
       this.addIfNotPresent(res, elem);
     }
     return res;
+  }
+
+  followElement(element: string) {
+    if(!this.grammar.isNonTerminal(element)) {
+      return [];
+    }
+    const size = this.follow_table[element].length;
+    return this.follow_table[element][size - 1];
   }
 
   addIfNotPresent(array, element): void {
@@ -134,7 +156,8 @@ export class CalculationsService {
         let res = 0;
         for(const rule of indexed_rules[nonterminal]) {
           let counter = 0;
-          const terms = rule.getProduction().getTerms();
+          let terms = rule.getProduction().getTerms();
+          terms = terms.filter(term => term !== Grammar.EOF);
           for(const term of terms) {
             
             if(term === Grammar.EPSILON && terms.length === 1) {
@@ -213,9 +236,9 @@ export class CalculationsService {
       for(const nonterminal of this.grammar.getNonTerminals()) {
         for(const rule of this.grammar.getRules()) {
           
-          const terms = rule.getProduction().getTerms();
-          const index = terms.indexOf(nonterminal);
-          if(index !== -1) {
+          let terms = rule.getProduction().getTerms();
+          let index = terms.indexOf(nonterminal);
+          while(index !== -1) {
             const next = index + 1;
             const beta = terms.slice(next);
             const beta_nullable = this.nullableElements(beta);
@@ -231,7 +254,8 @@ export class CalculationsService {
                 this.addIfNotPresent(table[nonterminal][current_line], term);
               }
             }
-
+            terms = beta;
+            index = terms.indexOf(nonterminal);
           }
         }
       }
@@ -239,6 +263,38 @@ export class CalculationsService {
     } while(this.hasChanged(table, current_line));
 
     this.follow_table = table;
+  }
+
+  calculateLLTable(): void {
+    let table = {};
+    const alphabet = this.grammar.getAlphabet();
+    const nonterminals = this.grammar.getNonTerminals();
+    const indexed_rules = this.grammar.getIndexedRules();
+
+    for(const letter of alphabet) {
+      table[letter] = {};
+      for(const nonterminal of nonterminals) {
+
+        for(const rule of indexed_rules[nonterminal]) {
+          const terms = rule.getProduction().getTerms();
+          let array = [];
+          
+          if(this.nullableElements(terms)) {
+            array = this.followElement(nonterminal);
+          }else {
+            array = this.firstElements(terms);
+          }
+
+          if(array.indexOf(letter) !== -1) {
+            table[letter][nonterminal] = rule.getId();
+          }else if(table[letter][nonterminal] === undefined){
+            table[letter][nonterminal] = 0;
+          }
+        }
+      }
+    }
+
+    this.ll_table = table;
   }
 
 }
@@ -249,4 +305,12 @@ E' -> + T E' | - T E' | epsilon
 T -> F T'
 T' -> x F T' | / F T' | epsilon
 F -> ( E ) | id
+*/
+
+/*
+S -> A B C
+A -> a | D
+B -> b | epsilon
+C -> c | epsilon
+D -> epsilon
 */

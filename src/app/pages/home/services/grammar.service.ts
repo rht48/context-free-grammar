@@ -25,13 +25,19 @@ export class GrammarService {
         const nonterminal = separated[0];
         const rules = separated[1];
         this.grammar.addNonTerminal(nonterminal);
-        right.push(rules);
         for(const r of rules.split(' | ')) {
           let rule = new Rule();
-          rule.setId(counter ++);
+          rule.setId(counter++);
           let production = new Production();
           rule.setNonTerminal(nonterminal);
-          for(const element of r.split(' ')) {
+          let elements = r.split(' ');
+          if(nonterminal === this.grammar.getEntryPoint()) {
+            if(elements.indexOf(Grammar.EOF) === -1) {
+              elements.push(Grammar.EOF);
+            }
+          }
+          right = right.concat(elements);
+          for(const element of elements) {
             production.addTerm(element);
           }
           rule.setProduction(production);
@@ -41,15 +47,9 @@ export class GrammarService {
     }
 
     for(const r of right) {
-      const rules = r.split(' | ');
-      for(const rule of rules) {
-        const elements = rule.split(' ');
-        for(const element of elements) {
-          if(element !== '' && !this.grammar.isNonTerminal(element)) {
-            if(element !== Grammar.EPSILON) {
-              this.grammar.addToAlphabet(element);
-            }
-          }
+      if(r !== '' && !this.grammar.isNonTerminal(r)) {
+        if(r !== Grammar.EPSILON) {
+          this.grammar.addToAlphabet(r);
         }
       }
     }

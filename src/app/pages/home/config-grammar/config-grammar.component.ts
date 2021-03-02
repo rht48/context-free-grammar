@@ -39,6 +39,7 @@ export class ConfigGrammarComponent implements OnInit {
     this.calculationsService.calculateNull();
     this.calculationsService.calculateFirst();
     this.calculationsService.calculateFollow();
+    this.calculationsService.calculateLLTable();
     this.grammarService.setGrammar(new Grammar());
   }
 

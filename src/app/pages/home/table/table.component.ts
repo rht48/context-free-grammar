@@ -10,6 +10,7 @@ export class TableComponent implements OnInit {
 
   @Input() table = {}
   @Input() strategy: Strategy = new DefaultStrategy();
+  @Input() type = 'simple';
 
   constructor() { }
 
@@ -32,6 +33,21 @@ export class TableComponent implements OnInit {
     const len = this.length();
     for(let i = 0; i < len; i++) {
       arr.push(i);
+    }
+    return arr;
+  }
+
+  nonterminals(): string[] {
+    if(this.type === 'simple') {
+      return this.keys();
+    }
+    let arr = [];
+    for(const key of this.keys()) {
+      for(const nonterminal of Object.keys(this.table[key])) {
+        if(arr.indexOf(nonterminal) === -1) {
+          arr.push(nonterminal);
+        }
+      }
     }
     return arr;
   }

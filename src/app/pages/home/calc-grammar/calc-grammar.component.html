@@ -38,3 +38,8 @@
 <div class="container">
     <app-table [table]="calculationsService.getFollowTable()" [strategy]="getArrayStrategy()"></app-table>
 </div>
+
+<h1 style="margin-bottom: 2em;">LL table:</h1>
+<div class="container">
+    <app-table [table]="calculationsService.getLLTable()" [strategy]="getNumberStrategy()" type="double"></app-table>
+</div>

@@ -8,6 +8,7 @@ export class Grammar {
     private indexed_rules = {};
 
     public static EPSILON = 'epsilon';
+    public static EOF = 'eof';
 
     constructor() {
         this.entrypoint = "";
