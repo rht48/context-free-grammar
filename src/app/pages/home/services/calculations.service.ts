@@ -59,7 +59,7 @@ export class CalculationsService {
       return true;
     }
     const size = this.null_table[element].length;
-    return this.null_table[element][size - 1];
+    return this.null_table[element][size - 1] === 1;
   }
 
   nullableElements(elements: string[]): boolean {
@@ -67,8 +67,7 @@ export class CalculationsService {
       return true;
     }
     if(this.nullableElement(elements[0])) {
-      elements.shift();
-      this.nullableElements(elements);
+      return this.nullableElements(elements.slice(1));
     }
     return false;
   }
@@ -89,8 +88,7 @@ export class CalculationsService {
       return [];
     }
     const first = this.firstElement(elements[0]);
-    elements.shift();
-    const rest = this.firstElements(elements);
+    const rest = this.firstElements(elements.slice(1));
     let res = rest;
     for(let elem of first) {
       this.addIfNotPresent(res, elem);
@@ -174,7 +172,6 @@ export class CalculationsService {
     do {
       this.duplicateLastRow(table);
       current_line++;
-      console.log(table);
 
       for(const nonterminal of this.grammar.getNonTerminals()) {
         for(const rule of indexed_rules[nonterminal]) {
@@ -215,27 +212,26 @@ export class CalculationsService {
 
       for(const nonterminal of this.grammar.getNonTerminals()) {
         for(const rule of this.grammar.getRules()) {
+          
           const terms = rule.getProduction().getTerms();
           const index = terms.indexOf(nonterminal);
           if(index !== -1) {
             const next = index + 1;
             const beta = terms.slice(next);
+            const beta_nullable = this.nullableElements(beta);
+
             if(next < terms.length) {
               const firsts = this.firstElements(beta);
               for(const first of firsts) {
                 this.addIfNotPresent(table[nonterminal][current_line], first);
               }
-              if(this.nullableElements(beta)) {
-                for(const term of table[rule.getNonTerminal()][current_line - 1]) {
-                  this.addIfNotPresent(table[nonterminal][current_line], term);
-                }
+            }
+            if(next >= terms.length || beta_nullable) {
+              for(const term of table[rule.getNonTerminal()][current_line - 1]) {
+                this.addIfNotPresent(table[nonterminal][current_line], term);
               }
             }
-            if(next >= terms.length || this.nullableElements(beta)) {
-              for(const elem of table[rule.getNonTerminal()][current_line - 1]) {
-                this.addIfNotPresent(table[nonterminal][current_line], elem);
-              }
-            }
+
           }
         }
       }
@@ -246,3 +242,11 @@ export class CalculationsService {
   }
 
 }
+/*
+S -> E eof
+E -> T E'
+E' -> + T E' | - T E' | epsilon
+T -> F T'
+T' -> x F T' | / F T' | epsilon
+F -> ( E ) | id
+*/
