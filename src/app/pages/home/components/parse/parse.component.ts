@@ -16,6 +16,7 @@ export class ParseComponent implements OnInit {
   steps: string = '';
 
   ngOnInit(): void {
+    this.parse('eof');
   }
 
   parse(input: string) {

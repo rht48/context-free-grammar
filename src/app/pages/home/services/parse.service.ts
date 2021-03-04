@@ -18,6 +18,7 @@ export class ParseService {
     if(this.parsed.indexOf(Grammar.EOF) === -1) {
       this.parsed.push(Grammar.EOF);
     }
+    this.parsed = this.parsed.filter(element => element !== '');
   }
 
   getStringSteps(): string {
@@ -31,7 +32,7 @@ export class ParseService {
     for(const id of Object.keys(this.stack_trace)) {
       str += '<li>';
       str += this.parsed[id] + ": "
-      str += stack.join(' ');
+      str += '<b>' + stack.join(' ') + '</b>';
       str += ' ';
       for(const rule of this.stack_trace[id]) {
         if(rule !== undefined) {
@@ -53,15 +54,15 @@ export class ParseService {
           str += 'Error';
           return str;
         }
-        str += stack.join(' ');
+        str += '<b>' + stack.join(' ') + '</b>';
         str += ' ';
       }
       stack.shift();
       str += '&xrarr; '
       if(stack.length > 0) {
-        str += '&otimes; ' + stack.join(' ');
+        str += '<b>&otimes; ' + stack.join(' ') + '</b>';
       }else {
-        str += "<i>ok</i>"
+        str += "<i><b>ok</b></i>"
       }
       str += ' ';
       str += '</li>'
@@ -119,8 +120,6 @@ export class ParseService {
       pointer ++;
 
     }
-    
-    console.log("recognised");
 
   }
 }
