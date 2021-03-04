@@ -1,5 +1,7 @@
+import { stripGeneratedFileSuffix } from '@angular/compiler/src/aot/util';
 import { Injectable } from '@angular/core';
 import { Grammar } from 'src/app/models/grammar';
+import { CalculationsService } from './calculations.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +12,9 @@ export class ParseService {
   steps: string[] = [];
   stack_trace = {};
   entrypoint: string;
+  graph: string = 'graph TB;'
 
-  constructor() { }
+  constructor(private calculationsService: CalculationsService) { }
 
   parse(input: string) {
     this.parsed = input.split(' ');
@@ -120,6 +123,46 @@ export class ParseService {
       pointer ++;
 
     }
-
+    this.updateGraph();
   }
+
+  id = 0;
+  updateGraph(): void {
+    this.graph = 'graph TB;';
+    const cloned_steps = JSON.parse(JSON.stringify(this.steps));
+    const grammar = this.calculationsService.getGrammar();
+    const entrypoint = grammar.getEntryPoint();
+    this.id = 0;
+    this.graph += this.id + '(("' + entrypoint + '"));';
+    this.id ++;
+    this.graph += this.createGraph(grammar, cloned_steps, grammar.getEntryPoint(), 0);
+  }
+
+  createGraph(grammar: Grammar, array: string[], parent: string, parent_id: number): string {
+    if(array.length === 0) {
+      return '';
+    }
+    let str = '';
+    const step = +array[0];
+    const rule = grammar.getRule(step);
+    if(rule.getNonTerminal() !== parent) {
+      return '';
+    }
+    array.shift();
+    const terms = rule.getProduction().getTerms();
+    for(const term of terms) {
+      const t = term === Grammar.EPSILON ? '&epsilon;' : term;
+      const current_id = ++this.id;
+      str += parent_id + '-->' + current_id + '(("' + t + '"));';
+      str += this.createGraph(grammar, array, term, current_id);
+    }
+    return str;
+  }
+}
+
+
+class Node {
+  id: number;
+  name: string;
+  children: Node[];
 }
