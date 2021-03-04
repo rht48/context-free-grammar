@@ -11,6 +11,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { CalcGrammarComponent } from './components/calc-grammar/calc-grammar.component';
 import { TableComponent } from './components/table/table.component';
 import { ParseComponent } from './components/parse/parse.component';
+import { TreeComponent } from './components/tree/tree.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { ParseComponent } from './components/parse/parse.component';
     ConfigGrammarComponent,
     CalcGrammarComponent,
     TableComponent,
-    ParseComponent
+    ParseComponent,
+    TreeComponent
   ]
 })
 export class HomeModule {
