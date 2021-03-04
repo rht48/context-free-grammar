@@ -329,3 +329,9 @@ T -> F T'
 T' -> x F T' | / F T' | epsilon
 F -> ( E ) | id | float
 */
+
+/*
+S -> L | ( AND S T ) | ( OR S T )
+T -> S | T T
+L -> a | b | c
+*/
