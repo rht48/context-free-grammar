@@ -10,6 +10,8 @@ import { ShowGrammarService } from '../../services/show-grammar.service';
 })
 export class CalcGrammarComponent implements OnInit {
 
+  customClass='custom-accordion-style';
+
   constructor(public showGrammarService: ShowGrammarService,
               public calculationsService: CalculationsService) { }
 
