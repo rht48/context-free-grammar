@@ -291,11 +291,7 @@ export class CalculationsService {
           }
 
           if(array.indexOf(letter) !== -1) {
-            if(table[letter][nonterminal] === undefined) {
-              table[letter][nonterminal] = rule.getId();
-            }else {
-              table[letter][nonterminal] += " | " + rule.getId();
-            }
+            table[letter][nonterminal] = rule.getId();
           }else if(table[letter][nonterminal] === undefined){
             table[letter][nonterminal] = 0;
           }
